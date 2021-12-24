@@ -45,7 +45,7 @@ const materialTitle = new THREE.ShaderMaterial({
             float f = mod((time - startTime) * timeFactor, animTime);
             f = min(1.49, f);
             f *= 2.0;
-            gl_Position = projectionMatrix * vec4(position.x + offsetX, position.y + offsetY - f, -0.2, 1.0);
+            gl_Position = projectionMatrix * vec4(position.x + offsetX, position.y + offsetY - f, -0.1, 1.0);
         }
     `
     ,
@@ -104,7 +104,7 @@ const materialH = new THREE.ShaderMaterial({
             if (f > 0.99)
             {
                 f = min(1.99, f);
-                gl_Position = projectionMatrix * vec4(position.x + offsetX + 0.99 - f, position.y + offsetY, -0.2, 1.0);
+                gl_Position = projectionMatrix * vec4(position.x + offsetX + 0.99 - f, position.y + offsetY, -0.1, 1.0);
             }
 
         }
@@ -165,7 +165,7 @@ const materialSh = new THREE.ShaderMaterial({
             if (f > 1.99)
             {
                 f = min(2.99, f);
-                gl_Position = projectionMatrix * vec4(position.x + offsetX + 1.99 - f, position.y + offsetY, -0.2, 1.0);
+                gl_Position = projectionMatrix * vec4(position.x + offsetX + 1.99 - f, position.y + offsetY, -0.1, 1.0);
             }
         }
     `
@@ -227,7 +227,7 @@ const materialText = new THREE.ShaderMaterial({
             if (f > 2.99)
             {
                 f = min(3.99, f);
-                gl_Position = projectionMatrix * vec4(position.x + offsetX + 2.99 - f, position.y + offsetY, -0.99, 1.0);
+                gl_Position = projectionMatrix * vec4(position.x + offsetX + 2.99 - f, position.y + offsetY, -0.1, 1.0);
             }
         }
     `
@@ -253,11 +253,11 @@ let text = null;
 
 let objs = [null, null, null, null];
 
-export default () => {
+export default e => {
     const app = useApp();
     const postScene = usePostScene();
 
-    {
+    e.waitUntil((async()=>{
         {   
             title = new Text();
             title.text = "WEBAVERSE";
@@ -286,7 +286,7 @@ export default () => {
             heading.material.uniforms.color.value = new THREE.Vector3(1.0, 1.0, 1.0);
                         
             objs[1] = heading;
-            
+
             heading.sync();
             app.add(heading);
         }
@@ -322,17 +322,17 @@ export default () => {
             text.sync();
             app.add(text);
         }
-        
-        let now = 0;
-        _update = (timestamp, timeDiff) => {
-            materialTitle.uniforms.time.value = timestamp/1000;
-            materialH.uniforms.time.value = timestamp/1000;
-            materialSh.uniforms.time.value = timestamp/1000;
-            materialText.uniforms.time.value = timestamp/1000;
+    })());
+    
+    let now = 0;
+    _update = (timestamp, timeDiff) => {
+        materialTitle.uniforms.time.value = timestamp/1000;
+        materialH.uniforms.time.value = timestamp/1000;
+        materialSh.uniforms.time.value = timestamp/1000;
+        materialText.uniforms.time.value = timestamp/1000;
 
-            now += timeDiff;
-        };
-    }
+        now += timeDiff;
+    };
 
     useFrame(({timestamp, timeDiff}) => {
         _update && _update(timestamp, timeDiff);
