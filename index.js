@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import {Text} from 'troika-three-text'
 import metaversefile from 'metaversefile';
-const {useApp, useOrthographicScene, useFrame, useCleanup, useInternals} = metaversefile;
+const {useApp, usePostOrthographicScene, useFrame, useCleanup, useInternals} = metaversefile;
 
 const materialTitle = new THREE.ShaderMaterial({
     uniforms:{
@@ -255,7 +255,7 @@ let objs = [null, null, null, null];
 
 export default e => {
     const app = useApp();
-    const sceneOrthographic = useOrthographicScene();
+    const postSceneOrthographic = usePostOrthographicScene();
 
     e.waitUntil((async()=>{
         {   
@@ -341,7 +341,7 @@ export default e => {
     useCleanup(()=>{
         for (const obj of objs) {
             if (obj) {
-                sceneOrthographic.remove(obj);
+                postSceneOrthographic.remove(obj);
                 obj.dispose();
             }
         }
