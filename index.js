@@ -210,8 +210,8 @@ export default e => {
             title = await makeTextMesh(
                 'WEBAVERSE',
                 materialTitle,
-                undefined,
-                0.05
+                undefined, // './fonts/WinchesterCaps.ttf',
+                0.1
             )
             objs[0] = title;
             app.add(title);
