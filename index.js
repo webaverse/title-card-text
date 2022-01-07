@@ -57,6 +57,7 @@ const materialTitle = new THREE.ShaderMaterial({
         uniform float animTime;
         uniform float startValue;
         uniform float endValue;
+        uniform vec3 iResolution;
         
         const float offsetX = 0.2;
         const float offsetY = 0.3;
@@ -71,7 +72,9 @@ const materialTitle = new THREE.ShaderMaterial({
             v *= 2.0; */
             float v = 0.;
             vec2 uv = (position.xy + 1.) / 2.;
-            gl_Position = vec4(position.x + (offsetX * 2. - 1.), position.y + (offsetY * 2. - 1.) - v, -0.1, 1.0);
+            vec3 p = position;
+            p *= vec3(2000. / iResolution.xy, 1.);
+            gl_Position = vec4(p.x + (offsetX * 2. - 1.), p.y + (offsetY * 2. - 1.) - v, -0.1, 1.0);
         }
     `,
     fragmentShader
@@ -206,6 +209,7 @@ async function makeTextMesh(
 
 export default e => {
     const app = useApp();
+    const renderer = useInternals().renderer;
     const postSceneOrthographic = usePostOrthographicScene();
 
     e.waitUntil((async()=>{
@@ -214,7 +218,7 @@ export default e => {
                 'WEBAVERSE',
                 materialTitle,
                 undefined, // './fonts/WinchesterCaps.ttf',
-                0.1
+                0.11,
             )
             objs[0] = title;
             app.add(title);
@@ -254,14 +258,22 @@ export default e => {
         }
     })());
     
-    // let now = 0;
     _update = (timestamp, timeDiff) => {
-        materialTitle.uniforms.time.value = timestamp/1000;
-        materialH.uniforms.time.value = timestamp/1000;
-        materialSh.uniforms.time.value = timestamp/1000;
-        materialText.uniforms.time.value = timestamp/1000;
-
-        // now += timeDiff;
+        const time = timestamp/1000;
+        const pixelRatio = renderer.getPixelRatio();
+        
+        const iResolution = renderer.getSize(localVector)
+          .multiplyScalar(pixelRatio);
+        localVector.z = pixelRatio;
+        for (const material of [
+            materialTitle,
+            materialH,
+            materialSh,
+            materialText,
+        ]) {
+            material.uniforms.time.value = time;
+            material.uniforms.iResolution.value.copy(iResolution);
+        }
     };
 
     useFrame(({timestamp, timeDiff}) => {
