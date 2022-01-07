@@ -20,20 +20,24 @@ const uniforms = {
     },
     timeFactor: {
         value: 4.0,
-        needsUpdate: true,
+        // needsUpdate: true,
     },
     animTime: {
         value: 6.0,
-        needsUpdate: true,
+        // needsUpdate: true,
     },
     startValue: {
         value: 0.0,
-        needsUpdate: true,
+        // needsUpdate: true,
     },
     endValue: {
         value: 0.0,
-        needsUpdate: true,
+        // needsUpdate: true,
     },
+    iResolution: {
+        value: new THREE.Vector3(),
+        // needsUpdate: true,
+    }
 };
 
 const fragmentShader = `\
