@@ -3,6 +3,8 @@ import {Text} from 'troika-three-text'
 import metaversefile from 'metaversefile';
 const {useApp, usePostOrthographicScene, useFrame, useCleanup, useInternals} = metaversefile;
 
+const localVector = new THREE.Vector3();
+
 const uniforms = {
     color: {
         type: 'v3',
