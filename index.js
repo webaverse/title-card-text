@@ -58,18 +58,20 @@ const materialTitle = new THREE.ShaderMaterial({
         uniform float startValue;
         uniform float endValue;
         
-        const float offsetX = -0.69;
-        const float offsetY = 2.65;
+        const float offsetX = 0.2;
+        const float offsetY = 0.3;
         
         void main()
         {
-            float f = (time - startTime) / ((startTime + animTime/2.0) - startTime);
+            /* float f = (time - startTime) / ((startTime + animTime/2.0) - startTime);
             f = clamp(f, 0., 1.);
             float v = startValue + (endValue - startValue) * f;
             
             v = min(1.49, v);
-            v *= 2.0;
-            gl_Position = projectionMatrix * vec4(position.x + offsetX, position.y + offsetY - v, -0.1, 1.0);
+            v *= 2.0; */
+            float v = 0.;
+            vec2 uv = (position.xy + 1.) / 2.;
+            gl_Position = vec4(position.x + (offsetX * 2. - 1.), position.y + (offsetY * 2. - 1.) - v, -0.1, 1.0);
         }
     `,
     fragmentShader
