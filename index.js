@@ -65,7 +65,7 @@ const materialTitle = new THREE.ShaderMaterial({
         
         void main()
         {
-            float v = 2.-factor*2.;
+            float v = (2.-factor*2.)*0.9;
             vec2 uv = (position.xy + 1.) / 2.;
             vec3 p = position;
             p *= vec3(2000. / iResolution.xy, 1.);
@@ -93,7 +93,7 @@ const materialH = new THREE.ShaderMaterial({
 
         void main()
         {
-            float v = 2.-factor*2.;
+            float v = (2.-factor*2.)*0.6;
             vec3 p = position;
             p *= vec3(2000. / iResolution.xy, 1.);
             gl_Position = vec4(p.x + (offsetX * 2. - 1.) + v, p.y + (offsetY * 2. - 1.), -0.1, 1.0);
@@ -120,7 +120,7 @@ const materialSh = new THREE.ShaderMaterial({
         
         void main()
         {
-            float v = 2.-factor*2.;
+            float v = (2.-factor*2.)*0.6;
             vec3 p = position;
             p *= vec3(2000. / iResolution.xy, 1.);
             gl_Position = vec4(p.x + (offsetX * 2. - 1.) + v, p.y + (offsetY * 2. - 1.), -0.1, 1.0);
@@ -147,7 +147,7 @@ const materialText = new THREE.ShaderMaterial({
         
         void main()
         {
-            float v = 2.-factor*2.;
+            float v = (2.-factor*2.)*0.6;
             vec3 p = position;
             p *= vec3(2000. / iResolution.xy, 1.);
             gl_Position = vec4(p.x + (offsetX * 2. - 1.) + v, p.y + (offsetY * 2. - 1.), -0.1, 1.0);
