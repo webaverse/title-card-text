@@ -90,17 +90,18 @@ const materialH = new THREE.ShaderMaterial({
         uniform float startValue;
         uniform float endValue;
         
-        const float offsetX = 1.01;
-        const float offsetY = 0.33;
-        
+        const float offsetX = 0.55;
+        const float offsetY = 0.5;
+
         void main()
         {
-            float f = (time - startTime) / ((startTime + animTime/2.0) - startTime);
+            /* float f = (time - startTime) / ((startTime + animTime/2.0) - startTime);
             f = clamp(f, 0., 1.);
             float v = startValue + (endValue - startValue) * f;
             
-            v = min(1.99, v);
-            gl_Position = projectionMatrix * vec4(position.x + offsetX + 0.99 - v, position.y + offsetY, -0.1, 1.0);
+            v = min(1.99, v); */
+            float v = 0.;
+            gl_Position = vec4(position.x + (offsetX * 2. - 1.) - v, position.y + (offsetY * 2. - 1.), -0.1, 1.0);
         }
     `,
     fragmentShader
@@ -119,17 +120,18 @@ const materialSh = new THREE.ShaderMaterial({
         uniform float startValue;
         uniform float endValue;
         
-        const float offsetX = 1.01;
-        const float offsetY = 0.14;
+        const float offsetX = 0.55;
+        const float offsetY = 0.4;
         
         void main()
         {
-            float f = (time - startTime) / ((startTime + animTime/2.0) - startTime);
+            /* float f = (time - startTime) / ((startTime + animTime/2.0) - startTime);
             f = clamp(f, 0., 1.);
             float v = startValue + (endValue - startValue) * f;
             
-            v = min(2.99, v);
-            gl_Position = projectionMatrix * vec4(position.x + offsetX + 1.99 - v, position.y + offsetY, -0.1, 1.0);
+            v = min(2.99, v); */
+            float v = 0.;
+            gl_Position = vec4(position.x + (offsetX * 2. - 1.) - v, position.y + (offsetY * 2. - 1.), -0.1, 1.0);
         }
     `,
     fragmentShader
@@ -148,17 +150,18 @@ const materialText = new THREE.ShaderMaterial({
         uniform float startValue;
         uniform float endValue;
         
-        const float offsetX = 1.01;
-        const float offsetY = 0.0;
+        const float offsetX = 0.55;
+        const float offsetY = 0.325;
         
         void main()
         {
-            float f = (time - startTime) / ((startTime + animTime/2.0) - startTime);
+            /* float f = (time - startTime) / ((startTime + animTime/2.0) - startTime);
             f = clamp(f, 0., 1.);
             float v = startValue + (endValue - startValue) * f;
             
-            v = min(3.99, v);
-            gl_Position = projectionMatrix * vec4(position.x + offsetX + 2.99 - v, position.y + offsetY, -0.1, 1.0);
+            v = min(3.99, v); */
+            float v = 0.;
+            gl_Position = vec4(position.x + (offsetX * 2. - 1.) - v, position.y + (offsetY * 2. - 1.), -0.1, 1.0);
         }
     `,
     fragmentShader
