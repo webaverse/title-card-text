@@ -98,9 +98,10 @@ const materialH = new THREE.ShaderMaterial({
         uniform float animTime;
         uniform float startValue;
         uniform float endValue;
+        uniform vec3 iResolution;
         
         const float offsetX = 0.55;
-        const float offsetY = 0.5;
+        const float offsetY = 0.55;
 
         void main()
         {
@@ -110,7 +111,9 @@ const materialH = new THREE.ShaderMaterial({
             
             v = min(1.99, v); */
             float v = 0.;
-            gl_Position = vec4(position.x + (offsetX * 2. - 1.) - v, position.y + (offsetY * 2. - 1.), -0.1, 1.0);
+            vec3 p = position;
+            p *= vec3(1600. / iResolution.xy, 1.);
+            gl_Position = vec4(p.x + (offsetX * 2. - 1.) - v, p.y + (offsetY * 2. - 1.), -0.1, 1.0);
         }
     `,
     fragmentShader
@@ -128,9 +131,10 @@ const materialSh = new THREE.ShaderMaterial({
         uniform float animTime;
         uniform float startValue;
         uniform float endValue;
+        uniform vec3 iResolution;
         
         const float offsetX = 0.55;
-        const float offsetY = 0.4;
+        const float offsetY = 0.45;
         
         void main()
         {
@@ -140,7 +144,9 @@ const materialSh = new THREE.ShaderMaterial({
             
             v = min(2.99, v); */
             float v = 0.;
-            gl_Position = vec4(position.x + (offsetX * 2. - 1.) - v, position.y + (offsetY * 2. - 1.), -0.1, 1.0);
+            vec3 p = position;
+            p *= vec3(1600. / iResolution.xy, 1.);
+            gl_Position = vec4(p.x + (offsetX * 2. - 1.) - v, p.y + (offsetY * 2. - 1.), -0.1, 1.0);
         }
     `,
     fragmentShader
@@ -158,9 +164,10 @@ const materialText = new THREE.ShaderMaterial({
         uniform float animTime;
         uniform float startValue;
         uniform float endValue;
+        uniform vec3 iResolution;
         
         const float offsetX = 0.55;
-        const float offsetY = 0.325;
+        const float offsetY = 0.35;
         
         void main()
         {
@@ -170,7 +177,9 @@ const materialText = new THREE.ShaderMaterial({
             
             v = min(3.99, v); */
             float v = 0.;
-            gl_Position = vec4(position.x + (offsetX * 2. - 1.) - v, position.y + (offsetY * 2. - 1.), -0.1, 1.0);
+            vec3 p = position;
+            p *= vec3(1600. / iResolution.xy, 1.);
+            gl_Position = vec4(p.x + (offsetX * 2. - 1.) - v, p.y + (offsetY * 2. - 1.), -0.1, 1.0);
         }
     `,
     fragmentShader
