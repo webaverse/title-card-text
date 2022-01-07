@@ -4,15 +4,15 @@ import metaversefile from 'metaversefile';
 const {useApp, usePostOrthographicScene, useFrame, useCleanup, useInternals} = metaversefile;
 
 const uniforms = {
-    color:{
+    color: {
         type: 'v3',
-        value: null
+        value: new THREE.Color(),
     },
-    time:{
+    time: {
         type: 'f',
         value: 0.0,
     },
-    startTime:{
+    startTime: {
         type: 'f',
         value: 0.0,
     },
