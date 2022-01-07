@@ -251,14 +251,14 @@ export default e => {
         }
     })());
     
-    let now = 0;
+    // let now = 0;
     _update = (timestamp, timeDiff) => {
         materialTitle.uniforms.time.value = timestamp/1000;
         materialH.uniforms.time.value = timestamp/1000;
         materialSh.uniforms.time.value = timestamp/1000;
         materialText.uniforms.time.value = timestamp/1000;
 
-        now += timeDiff;
+        // now += timeDiff;
     };
 
     useFrame(({timestamp, timeDiff}) => {
