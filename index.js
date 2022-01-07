@@ -26,11 +26,7 @@ const uniforms = {
         value: 6.0,
         // needsUpdate: true,
     },
-    startValue: {
-        value: 0.0,
-        // needsUpdate: true,
-    },
-    endValue: {
+    factor: {
         value: 0.0,
         // needsUpdate: true,
     },
@@ -61,8 +57,7 @@ const materialTitle = new THREE.ShaderMaterial({
         uniform float startTime;
         uniform float timeFactor;
         uniform float animTime;
-        uniform float startValue;
-        uniform float endValue;
+        uniform float factor;
         uniform vec3 iResolution;
         
         const float offsetX = 0.2;
@@ -70,17 +65,11 @@ const materialTitle = new THREE.ShaderMaterial({
         
         void main()
         {
-            /* float f = (time - startTime) / ((startTime + animTime/2.0) - startTime);
-            f = clamp(f, 0., 1.);
-            float v = startValue + (endValue - startValue) * f;
-            
-            v = min(1.49, v);
-            v *= 2.0; */
-            float v = 0.;
+            float v = 2.-factor*2.;
             vec2 uv = (position.xy + 1.) / 2.;
             vec3 p = position;
             p *= vec3(2000. / iResolution.xy, 1.);
-            gl_Position = vec4(p.x + (offsetX * 2. - 1.), p.y + (offsetY * 2. - 1.) - v, -0.1, 1.0);
+            gl_Position = vec4(p.x + (offsetX * 2. - 1.), p.y + (offsetY * 2. - 1.) + v, -0.1, 1.0);
         }
     `,
     fragmentShader
@@ -96,8 +85,7 @@ const materialH = new THREE.ShaderMaterial({
         uniform float startTime;
         uniform float timeFactor;
         uniform float animTime;
-        uniform float startValue;
-        uniform float endValue;
+        uniform float factor;
         uniform vec3 iResolution;
         
         const float offsetX = 0.55;
@@ -105,15 +93,10 @@ const materialH = new THREE.ShaderMaterial({
 
         void main()
         {
-            /* float f = (time - startTime) / ((startTime + animTime/2.0) - startTime);
-            f = clamp(f, 0., 1.);
-            float v = startValue + (endValue - startValue) * f;
-            
-            v = min(1.99, v); */
-            float v = 0.;
+            float v = 2.-factor*2.;
             vec3 p = position;
             p *= vec3(2000. / iResolution.xy, 1.);
-            gl_Position = vec4(p.x + (offsetX * 2. - 1.) - v, p.y + (offsetY * 2. - 1.), -0.1, 1.0);
+            gl_Position = vec4(p.x + (offsetX * 2. - 1.) + v, p.y + (offsetY * 2. - 1.), -0.1, 1.0);
         }
     `,
     fragmentShader
@@ -129,8 +112,7 @@ const materialSh = new THREE.ShaderMaterial({
         uniform float startTime;
         uniform float timeFactor;
         uniform float animTime;
-        uniform float startValue;
-        uniform float endValue;
+        uniform float factor;
         uniform vec3 iResolution;
         
         const float offsetX = 0.55;
@@ -138,15 +120,10 @@ const materialSh = new THREE.ShaderMaterial({
         
         void main()
         {
-            /* float f = (time - startTime) / ((startTime + animTime/2.0) - startTime);
-            f = clamp(f, 0., 1.);
-            float v = startValue + (endValue - startValue) * f;
-            
-            v = min(2.99, v); */
-            float v = 0.;
+            float v = 2.-factor*2.;
             vec3 p = position;
             p *= vec3(2000. / iResolution.xy, 1.);
-            gl_Position = vec4(p.x + (offsetX * 2. - 1.) - v, p.y + (offsetY * 2. - 1.), -0.1, 1.0);
+            gl_Position = vec4(p.x + (offsetX * 2. - 1.) + v, p.y + (offsetY * 2. - 1.), -0.1, 1.0);
         }
     `,
     fragmentShader
@@ -162,8 +139,7 @@ const materialText = new THREE.ShaderMaterial({
         uniform float startTime;
         uniform float timeFactor;
         uniform float animTime;
-        uniform float startValue;
-        uniform float endValue;
+        uniform float factor;
         uniform vec3 iResolution;
         
         const float offsetX = 0.55;
@@ -171,15 +147,10 @@ const materialText = new THREE.ShaderMaterial({
         
         void main()
         {
-            /* float f = (time - startTime) / ((startTime + animTime/2.0) - startTime);
-            f = clamp(f, 0., 1.);
-            float v = startValue + (endValue - startValue) * f;
-            
-            v = min(3.99, v); */
-            float v = 0.;
+            float v = 2.-factor*2.;
             vec3 p = position;
             p *= vec3(2000. / iResolution.xy, 1.);
-            gl_Position = vec4(p.x + (offsetX * 2. - 1.) - v, p.y + (offsetY * 2. - 1.), -0.1, 1.0);
+            gl_Position = vec4(p.x + (offsetX * 2. - 1.) + v, p.y + (offsetY * 2. - 1.), -0.1, 1.0);
         }
     `,
     fragmentShader
