@@ -208,7 +208,7 @@ export default e => {
                 'WEBAVERSE',
                 materialTitle,
                 undefined, // './fonts/WinchesterCaps.ttf',
-                0.11,
+                0.07,
             )
             objs[0] = title;
             app.add(title);
