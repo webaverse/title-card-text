@@ -3,35 +3,37 @@ import {Text} from 'troika-three-text'
 import metaversefile from 'metaversefile';
 const {useApp, usePostOrthographicScene, useFrame, useCleanup, useInternals} = metaversefile;
 
+const localVector = new THREE.Vector3();
+
 const uniforms = {
-    color:{
+    color: {
         type: 'v3',
-        value: null
+        value: new THREE.Color(),
     },
-    time:{
+    time: {
         type: 'f',
         value: 0.0,
     },
-    startTime:{
+    startTime: {
         type: 'f',
         value: 0.0,
     },
     timeFactor: {
         value: 4.0,
-        needsUpdate: true,
+        // needsUpdate: true,
     },
     animTime: {
         value: 6.0,
-        needsUpdate: true,
+        // needsUpdate: true,
     },
-    startValue: {
+    factor: {
         value: 0.0,
-        needsUpdate: true,
+        // needsUpdate: true,
     },
-    endValue: {
-        value: 0.0,
-        needsUpdate: true,
-    },
+    iResolution: {
+        value: new THREE.Vector3(),
+        // needsUpdate: true,
+    }
 };
 
 const fragmentShader = `\
@@ -55,21 +57,20 @@ const materialTitle = new THREE.ShaderMaterial({
         uniform float startTime;
         uniform float timeFactor;
         uniform float animTime;
-        uniform float startValue;
-        uniform float endValue;
+        uniform float factor;
+        uniform vec3 iResolution;
         
-        const float offsetX = -0.69;
-        const float offsetY = 2.65;
+        const float offsetX = 0.2;
+        const float offsetY = 0.3;
         
         void main()
         {
-            float f = (time - startTime) / ((startTime + animTime/2.0) - startTime);
-            f = clamp(f, 0., 1.);
-            float v = startValue + (endValue - startValue) * f;
-            
-            v = min(1.49, v);
-            v *= 2.0;
-            gl_Position = projectionMatrix * vec4(position.x + offsetX, position.y + offsetY - v, -0.1, 1.0);
+            float factor2 = pow(factor, 0.07);
+            float v = (2.-factor2*2.)*0.9;
+            vec2 uv = (position.xy + 1.) / 2.;
+            vec3 p = position;
+            p *= vec3(2000. / iResolution.xy, 1.);
+            gl_Position = vec4(p.x + (offsetX * 2. - 1.), p.y + (offsetY * 2. - 1.) + v, -0.1, 1.0);
         }
     `,
     fragmentShader
@@ -85,20 +86,19 @@ const materialH = new THREE.ShaderMaterial({
         uniform float startTime;
         uniform float timeFactor;
         uniform float animTime;
-        uniform float startValue;
-        uniform float endValue;
+        uniform float factor;
+        uniform vec3 iResolution;
         
-        const float offsetX = 1.01;
-        const float offsetY = 0.33;
-        
+        const float offsetX = 0.55;
+        const float offsetY = 0.55;
+
         void main()
         {
-            float f = (time - startTime) / ((startTime + animTime/2.0) - startTime);
-            f = clamp(f, 0., 1.);
-            float v = startValue + (endValue - startValue) * f;
-            
-            v = min(1.99, v);
-            gl_Position = projectionMatrix * vec4(position.x + offsetX + 0.99 - v, position.y + offsetY, -0.1, 1.0);
+            float factor2 = pow(factor, 0.07);
+            float v = (2.-factor2*2.)*0.6;
+            vec3 p = position;
+            p *= vec3(2000. / iResolution.xy, 1.);
+            gl_Position = vec4(p.x + (offsetX * 2. - 1.) + v, p.y + (offsetY * 2. - 1.), -0.1, 1.0);
         }
     `,
     fragmentShader
@@ -114,20 +114,19 @@ const materialSh = new THREE.ShaderMaterial({
         uniform float startTime;
         uniform float timeFactor;
         uniform float animTime;
-        uniform float startValue;
-        uniform float endValue;
+        uniform float factor;
+        uniform vec3 iResolution;
         
-        const float offsetX = 1.01;
-        const float offsetY = 0.14;
+        const float offsetX = 0.55;
+        const float offsetY = 0.45;
         
         void main()
         {
-            float f = (time - startTime) / ((startTime + animTime/2.0) - startTime);
-            f = clamp(f, 0., 1.);
-            float v = startValue + (endValue - startValue) * f;
-            
-            v = min(2.99, v);
-            gl_Position = projectionMatrix * vec4(position.x + offsetX + 1.99 - v, position.y + offsetY, -0.1, 1.0);
+            float factor2 = pow(factor, 0.07);
+            float v = (2.-factor2*2.)*0.6;
+            vec3 p = position;
+            p *= vec3(2000. / iResolution.xy, 1.);
+            gl_Position = vec4(p.x + (offsetX * 2. - 1.) + v, p.y + (offsetY * 2. - 1.), -0.1, 1.0);
         }
     `,
     fragmentShader
@@ -143,20 +142,19 @@ const materialText = new THREE.ShaderMaterial({
         uniform float startTime;
         uniform float timeFactor;
         uniform float animTime;
-        uniform float startValue;
-        uniform float endValue;
+        uniform float factor;
+        uniform vec3 iResolution;
         
-        const float offsetX = 1.01;
-        const float offsetY = 0.0;
+        const float offsetX = 0.55;
+        const float offsetY = 0.35;
         
         void main()
         {
-            float f = (time - startTime) / ((startTime + animTime/2.0) - startTime);
-            f = clamp(f, 0., 1.);
-            float v = startValue + (endValue - startValue) * f;
-            
-            v = min(3.99, v);
-            gl_Position = projectionMatrix * vec4(position.x + offsetX + 2.99 - v, position.y + offsetY, -0.1, 1.0);
+            float factor2 = pow(factor, 0.07);
+            float v = (2.-factor2*2.)*0.6;
+            vec3 p = position;
+            p *= vec3(2000. / iResolution.xy, 1.);
+            gl_Position = vec4(p.x + (offsetX * 2. - 1.) + v, p.y + (offsetY * 2. - 1.), -0.1, 1.0);
         }
     `,
     fragmentShader
@@ -201,6 +199,7 @@ async function makeTextMesh(
 
 export default e => {
     const app = useApp();
+    const renderer = useInternals().renderer;
     const postSceneOrthographic = usePostOrthographicScene();
 
     e.waitUntil((async()=>{
@@ -208,8 +207,8 @@ export default e => {
             title = await makeTextMesh(
                 'WEBAVERSE',
                 materialTitle,
-                undefined,
-                0.05
+                undefined, // './fonts/WinchesterCaps.ttf',
+                0.11,
             )
             objs[0] = title;
             app.add(title);
@@ -217,7 +216,7 @@ export default e => {
 
         {
             heading = await makeTextMesh(
-                '',
+                'Heading',
                 materialH,
                 undefined,
                 0.13
@@ -228,7 +227,7 @@ export default e => {
 
         {
             subHeading = await makeTextMesh(
-                '',
+                'Subheading',
                 materialSh,
                 undefined,
                 0.07
@@ -239,7 +238,7 @@ export default e => {
 
         {
             text = await makeTextMesh(
-                '',
+                'Text',
                 materialText,
                 undefined,
                 0.08
@@ -249,14 +248,22 @@ export default e => {
         }
     })());
     
-    let now = 0;
     _update = (timestamp, timeDiff) => {
-        materialTitle.uniforms.time.value = timestamp/1000;
-        materialH.uniforms.time.value = timestamp/1000;
-        materialSh.uniforms.time.value = timestamp/1000;
-        materialText.uniforms.time.value = timestamp/1000;
-
-        now += timeDiff;
+        const time = timestamp/1000;
+        const pixelRatio = renderer.getPixelRatio();
+        
+        const iResolution = renderer.getSize(localVector)
+          .multiplyScalar(pixelRatio);
+        localVector.z = pixelRatio;
+        for (const material of [
+            materialTitle,
+            materialH,
+            materialSh,
+            materialText,
+        ]) {
+            material.uniforms.time.value = time;
+            material.uniforms.iResolution.value.copy(iResolution);
+        }
     };
 
     useFrame(({timestamp, timeDiff}) => {
