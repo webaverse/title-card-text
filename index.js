@@ -216,7 +216,7 @@ export default e => {
 
         {
             heading = await makeTextMesh(
-                'Heading',
+                '',
                 materialH,
                 undefined,
                 0.13
@@ -227,7 +227,7 @@ export default e => {
 
         {
             subHeading = await makeTextMesh(
-                'Subheading',
+                '',
                 materialSh,
                 undefined,
                 0.07
@@ -238,7 +238,7 @@ export default e => {
 
         {
             text = await makeTextMesh(
-                'Text',
+                '',
                 materialText,
                 undefined,
                 0.08
